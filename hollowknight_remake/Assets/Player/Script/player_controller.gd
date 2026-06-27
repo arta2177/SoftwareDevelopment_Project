@@ -59,7 +59,7 @@ func horizontal_movement():
 		dash()
 		
 	
-
+salam :)
 func set_animations():
 	if velocity.x != 0:
 		$AnimationPlayer.play("Move")
@@ -87,7 +87,7 @@ func change_dir():
 	
 func jump_logic():
 	if is_on_floor():
-		jump_amount = 2
+		jump_amount = 5
 		if Input.is_action_just_pressed("jump"):
 			jump_amount -= 1
 			velocity.y -= lerp(jump_speed, acceleration, 1)
