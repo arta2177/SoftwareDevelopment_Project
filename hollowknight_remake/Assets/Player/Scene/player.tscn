@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=3 uid="uid://ddjistai1s72x"]
+
+[ext_resource type="Script" uid="uid://cbxnrf82q6uni" path="res://Assets/Player/Script/player_controller.gd" id="1_k45vd"]
+[ext_resource type="Texture2D" uid="uid://v36r6g2oytvu" path="res://Assets/Player/Sprites/Player_hollow_knight.png" id="2_htqcy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nsuie"]
+size = Vector2(12, 23)
+
+[sub_resource type="Animation" id="Animation_gadha"]
+resource_name = "Fall"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+
+[sub_resource type="Animation" id="Animation_26ldq"]
+resource_name = "Idle"
+length = 0.5
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_go3up"]
+resource_name = "Jump"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [15]
+}
+
+[sub_resource type="Animation" id="Animation_np0bx"]
+resource_name = "Move"
+length = 0.9
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10, 11, 12, 13, 6]
+}
+
+[sub_resource type="Animation" id="Animation_o118k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hnm0a"]
+_data = {
+&"Fall": SubResource("Animation_gadha"),
+&"Idle": SubResource("Animation_26ldq"),
+&"Jump": SubResource("Animation_go3up"),
+&"Move": SubResource("Animation_np0bx"),
+&"RESET": SubResource("Animation_o118k")
+}
+
+[node name="Playyer" type="CharacterBody2D"]
+safe_margin = 0.14
+script = ExtResource("1_k45vd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_htqcy")
+hframes = 8
+vframes = 7
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10.5)
+shape = SubResource("RectangleShape2D_nsuie")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hnm0a")
+}
+
+[node name="Raycast" type="Node2D" parent="."]
+position = Vector2(0, 10)
+
+[node name="ray_left" type="RayCast2D" parent="Raycast"]
+visible = false
+target_position = Vector2(-14, 0)
+
+[node name="ray_right" type="RayCast2D" parent="Raycast"]
+target_position = Vector2(14, 0)
